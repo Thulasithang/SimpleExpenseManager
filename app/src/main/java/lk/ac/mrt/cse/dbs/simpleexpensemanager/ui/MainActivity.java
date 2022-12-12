@@ -16,6 +16,7 @@
 
 package lk.ac.mrt.cse.dbs.simpleexpensemanager.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,10 @@ import android.support.v7.widget.Toolbar;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.R;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.InMemoryDemoExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.exception.ExpenseManagerException;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.DbHelp;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.PersistentExpenseManager;
+
 
 public class MainActivity extends AppCompatActivity {
     private ExpenseManager expenseManager;
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        DbHelp helper = new DbHelp(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -65,7 +71,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         /***  Begin generating dummy data for In-Memory implementation  ***/
-        expenseManager = new InMemoryDemoExpenseManager();
+         expenseManager = new PersistentExpenseManager(MainActivity.this);
+        //expenseManager = new InMemoryDemoExpenseManager();
+
         /*** END ***/
     }
 
@@ -105,13 +113,17 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getString(R.string.label_manage);
+//                    return getString(R.string.label_manage);
+                    return ("manage");
                 case 1:
-                    return getString(R.string.label_add_account);
+//                    return getString(R.string.label_add_account);
+                    return ("add account");
                 case 2:
-                    return getString(R.string.label_logs);
+//                    return getString(R.string.label_logs);
+                    return ("logs");
                 default:
-                    return getString(R.string.label_manage);
+//                    return getString(R.string.label_manage);
+                    return ("manage");
             }
         }
     }
